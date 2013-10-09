@@ -1,0 +1,31 @@
+#include <Servo.h> //声明伺服马达函数库
+Servo myservo;  // 定义伺服马达对象
+
+
+void setup()
+{
+ //Serial.begin(9600);   
+  myservo.attach(9);  //初始化9号数字量引脚来控制马达
+   //连续旋转的舵机， 执行myservo.write(90)，舵机的速度可能不为0，
+   //我手头的舵机，执行myservo.write(93)，舵机的速度才为0。
+   myservo.write(93);//舵机停转
+}
+
+
+void loop()
+{ 
+    int val;
+    int dat;
+    val=analogRead(0);//采集连接在0号模拟量引脚上温度传感器的数据；
+    dat=0.488*val;//把从传感器采集的数据正比转换为温度值
+    //Serial.println(dat);
+    if(dat>20)//如果温度值大于20度
+    {
+      myservo.write(180);//舵机全速旋转
+    }
+    else//否则
+    {
+      myservo.write(93);//舵机停转
+    }
+    delay(500);//延时500ms
+}
